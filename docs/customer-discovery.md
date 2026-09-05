@@ -154,11 +154,11 @@ The customer-facing application is assumed to process business and customer info
 
 The solution should protect:
 
-Customer/application data
-Authentication information
-Application secrets and keys
-Administrative configuration
-Security and audit information
+Customer/application data,
+Authentication information,
+Application secrets and keys,
+Administrative configuration,
+Security and audit information.
 
 ## 16. Privileged Access Requirements
 
