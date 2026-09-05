@@ -44,12 +44,9 @@ Security leadership — concerned with risk reduction, visibility and security c
 
 For this project, I identify three primary identity categories:
 
-Standard employees
-Employees who require access to business applications and resources necessary for their roles.
-Administrators
-Privileged users who require elevated access to manage identity, security and Azure resources.
-Application / workload identity
-The customer-facing application requires its own identity to authenticate to Azure resources without depending on a human user's credentials.
+Standard employees; Employees who require access to business applications and resources necessary for their roles.
+Administrators; Privileged users who require elevated access to manage identity, security and Azure resources.
+Application / workload identity; The customer-facing application requires its own identity to authenticate to Azure resources without depending on a human user's credentials.
 
 ## 6. Functional Requirements
 
