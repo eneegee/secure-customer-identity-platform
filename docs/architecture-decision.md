@@ -220,6 +220,14 @@ and:
 
 A production environment with greater risk, regulation or scale could justify additional security services and licensing.
 
+### Entra Licensing Constraint
+
+The current project environment uses Microsoft Entra ID Free. Security Defaults can provide baseline MFA protection, but customized Conditional Access policies require Microsoft Entra ID P1 or an eligible qualifying license.
+
+Because this is a cost-conscious personal project, the core implementation will use the security capabilities available in the current tenant rather than purchasing a premium identity license solely for the demonstration.
+
+For a production NexaFlow environment, Microsoft Entra ID P1 or an eligible qualifying license would be evaluated to implement customized Conditional Access policies aligned with the organization's risk and access requirements.
+
 ---
 
 ## 9. Limitations
@@ -239,6 +247,10 @@ It does not demonstrate:
 The implementation is intentionally smaller than a real enterprise deployment.
 
 It demonstrates the ability to reason about and implement a representative identity-security architecture, not professional production experience.
+
+### Conditional Access Limitation
+
+Custom Conditional Access policies are not implemented in the current environment because the tenant has Microsoft Entra ID Free. The project will instead demonstrate the available MFA/security-default capabilities and document Conditional Access as a production recommendation.
 
 ---
 
