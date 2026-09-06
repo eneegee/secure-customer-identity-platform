@@ -77,6 +77,26 @@ Scope: NexaFlow storage account
 
 Purpose: Allows standard users to read test blob data without granting broad Azure management permissions.
 
+### Privileged Administrator Group
+
+`NexaFlow-Privileged-Admins`
+
+Role: `Storage Account Contributor`
+
+Scope: NexaFlow storage account
+
+Purpose: Provides management-plane access to the specific storage resource.
+
+### Privileged Administrator Data Access
+
+`NexaFlow-Privileged-Admins`
+
+Role: `Storage Blob Data Reader`
+
+Scope: NexaFlow storage account
+
+Purpose: Provides read-only access to the demonstration blob data.
+
 ## 7. Authentication Controls
 
 ## 8. Workload Identity
