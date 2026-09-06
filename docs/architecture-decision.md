@@ -191,6 +191,12 @@ Managed identity reduces reliance on long-lived credentials, but it is only appl
 
 Increasing logging improves investigation capability but excessive telemetry can create unnecessary monitoring costs. The project therefore uses only the logging necessary to demonstrate the required security and audit capabilities.
 
+### Privileged Storage Access
+
+The privileged administrator will use a resource-specific management role rather than the broader Azure Contributor role. Storage Account Contributor provides management-plane access to the NexaFlow storage account, while Storage Blob Data Reader provides read-only access to the stored data.
+
+This separation limits unnecessary permissions while still allowing the administrator to perform the management and validation activities required for this project.
+
 ---
 
 ## 8. Cost Trade-offs
