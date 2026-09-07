@@ -97,6 +97,26 @@ Scope: NexaFlow storage account
 
 Purpose: Provides read-only access to the demonstration blob data.
 
+### Container App → Azure Container Registry
+
+Principal: `nexaflow-identity-app`
+
+Role: `AcrPull`
+
+Scope: NexaFlow Azure Container Registry
+
+Purpose: Allows the Container App workload to pull its container image without relying on stored registry credentials.
+
+### Container App → Azure Storage
+
+Principal: `nexaflow-identity-app`
+
+Role: `Storage Blob Data Reader`
+
+Scope: NexaFlow Storage Account
+
+Purpose: Allows the application to read the specific blob data required by the workload without granting Azure resource-management permissions or blob write/delete permissions.
+
 ## 7. Authentication Controls
 
 ## 8. Workload Identity
@@ -104,3 +124,11 @@ Purpose: Provides read-only access to the demonstration blob data.
 ## 9. Monitoring and Audit
 
 ## 10. Implementation Notes
+
+### Workload Identity Permissions
+
+The application uses one system-assigned managed identity with resource-specific permissions.
+
+The identity is authorized separately to pull its container image from Azure Container Registry and to read required blob data from Azure Storage.
+
+The application does not receive broad Azure management permissions.
