@@ -79,7 +79,7 @@ This allows the application to authenticate to Azure services without storing lo
         Standard Users                 Privileged Admins
                 │                               │
        Security Defaults                Security Defaults
-             + MFA                           + MFA
+             & MFA                           & MFA
                 │                               │
                 │                      Scoped Azure RBAC
                 │                               │
