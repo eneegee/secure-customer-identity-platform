@@ -139,9 +139,13 @@ This option may become appropriate as NexaFlow grows, enters more heavily regula
 
 **Option B — Enhanced Azure Identity Architecture** is recommended.
 
-The proposed architecture will use Microsoft Entra ID as the central identity foundation, Azure RBAC for authorization, MFA and Conditional Access for stronger authentication and access decisions, managed identity for application-to-Azure authentication, and Azure identity/activity logging for visibility and investigation.
+The target NexaFlow architecture uses Microsoft Entra ID as the central identity foundation, Azure RBAC for authorization, MFA and Conditional Access for stronger authentication and access decisions, managed identity for application-to-Azure authentication, privileged-access separation, and identity/activity logging.
 
-The design will separate standard-user access from privileged administrative access and will apply least-privilege principles to both human and workload identities.
+For the current cost-conscious implementation, the project uses Microsoft Entra Security Defaults to provide baseline MFA protection because the tenant uses Microsoft Entra ID Free. Custom Conditional Access policies are therefore documented as a production recommendation rather than an implemented control.
+
+The implemented architecture uses Azure RBAC, Security Defaults, system-assigned managed identity, scoped privileged access, Microsoft Entra-based resource authorization, and Azure/Entra logging.
+
+The design separates standard-user access from privileged administrative access and applies least-privilege principles to both human and workload identities.
 
 ---
 
@@ -196,6 +200,16 @@ Increasing logging improves investigation capability but excessive telemetry can
 The privileged administrator will use a resource-specific management role rather than the broader Azure Contributor role. Storage Account Contributor provides management-plane access to the NexaFlow storage account, while Storage Blob Data Reader provides read-only access to the stored data.
 
 This separation limits unnecessary permissions while still allowing the administrator to perform the management and validation activities required for this project.
+
+### Storage Authorization Hardening
+
+Security validation identified Shared Key authorization as an alternate storage data-access path that could weaken the intended Microsoft Entra RBAC boundary.
+
+The final implementation therefore disables Shared Key authorization and uses Microsoft Entra authentication as the intended blob-data authorization path.
+
+Privileged RBAC assignments were also reduced from resource-group scope to the specific NexaFlow storage account.
+
+These changes were validated through repeated read, write, and delete testing.
 
 ---
 
@@ -266,19 +280,19 @@ Custom Conditional Access policies are not implemented in the current environmen
 
 The architecture provides the strongest balance between NexaFlow's security requirements, expected growth, operational simplicity and cost constraints.
 
-The implementation will therefore focus on:
+The implementation therefore focuses on:
 
 ```text
 Microsoft Entra ID
         ↓
-MFA + Conditional Access
+Security Defaults & MFA
         ↓
-RBAC + Least Privilege
+Azure RBAC & Least Privilege
         ↓
 Privileged Access Separation
         ↓
 Application / Managed Identity
         ↓
-Azure Resource Authorization
+Microsoft Entra Resource Authorization
         ↓
 Identity & Activity Logging
