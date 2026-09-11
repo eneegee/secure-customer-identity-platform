@@ -9,7 +9,7 @@
 
 ## 2. Identity Model
 
-NexaFlow's implementation separates human identities into standard-user and privileged-administrator groups. The customer-facing application will use a separate workload identity rather than a human user identity.
+NexaFlow's implementation separates human identities into standard-user and privileged-administrator groups. The customer-facing application uses a separate workload identity rather than a human user identity.
 
 ### Standard Users
 
@@ -18,8 +18,6 @@ Standard employees are members of `NexaFlow-Standard-Users`.
 ### Privileged Administrators
 
 Privileged administrators are members of `NexaFlow-Privileged-Admins`.
-
-### Workload Identity
 
 ### Workload Identity
 
@@ -185,11 +183,32 @@ No authentication credentials are stored in these environment variables.
 
 ## 9. Monitoring and Audit
 
-The project requires visibility into identity and access activity to support security investigation and validation.
+The project provides visibility into identity and Azure management activity through Microsoft Entra sign-in logs and Azure Activity Log.
 
-Identity and resource activity will be reviewed through the available Azure monitoring and audit capabilities.
+### Microsoft Entra Sign-in Logs
 
-Detailed monitoring validation will be completed during the testing phase.
+Sign-in activity was validated for both the `NexaFlow Standard User` and `NexaFlow Privileged Administrator`.
+
+The reviewed sign-in events showed:
+
+- Successful authentication.
+- Multifactor authentication requirement.
+- MFA satisfaction within the authentication session.
+- Security Defaults involvement.
+
+### Azure Activity Log
+
+Azure management-plane activity was also reviewed.
+
+Validated events included:
+
+- Storage account configuration updates.
+- Azure RBAC role-assignment creation.
+- Storage account key operations.
+
+The Activity Log provided the initiating identity, affected resource, operation status, resource group, and timestamp.
+
+This demonstrates that relevant identity and administrative activity can be observed and attributed during security investigation.
 
 ## 10. Implementation Notes
 
@@ -212,3 +231,16 @@ The application workload receives only `Storage Blob Data Reader` and does not r
 Human identities are used for interactive access and administration, while the application uses a separate managed identity for service-to-service access.
 
 This separation allows workload permissions to be controlled independently from human-user permissions and reduces dependence on long-lived application credentials.
+
+### Storage Authorization Hardening
+
+During security testing, Shared Key authorization was identified as an alternate storage authentication path that could provide access outside the intended Microsoft Entra read-only RBAC model.
+
+The implementation was hardened by:
+
+- Scoping privileged administrator role assignments to the specific NexaFlow storage account.
+- Disabling Shared Key authorization.
+- Using Microsoft Entra authentication as the intended blob-data access path.
+- Retesting blob read, write, and delete operations.
+
+After remediation, authorized read operations succeeded while unauthorized write and delete operations were denied.
